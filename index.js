@@ -211,6 +211,21 @@ Generator.prototype.createYeomanFiles = function createYeomanFiles() {
   this.copy('gitattributes', '.gitattributes');
 }
 
+// create the files necessary to the build task
+Generator.prototype.createBuildTask = function createBuildTask() {
+  var cb = this.async(),
+      self = this;
+
+  fs.mkdir('node_modules', function() {
+    fs.mkdir('node_modules/yeoman-wordpress', function() {
+      fs.mkdir('node_modules/yeoman-wordpress/tasks', function() {
+        self.copy('build.js', 'node_modules/tasks/build.js');
+        cb();
+      });
+    });
+  });
+}
+
 Generator.prototype.endGenerator = function endGenerator() {
   grunt.log.writeln('');
   grunt.log.writeln('Looks like we\'re done!');
