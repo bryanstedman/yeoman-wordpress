@@ -206,24 +206,10 @@ Generator.prototype.convertFiles = function convertFiles() {
 // generate the files to use Yeoman and the git related files
 Generator.prototype.createYeomanFiles = function createYeomanFiles() {
   this.template('Gruntfile.js');
+  this.template('build.js', 'node_modules/yeoman-worpress/tasks/build.js');
   this.copy('package.json', 'package.json');
   this.copy('gitignore', '.gitignore');
   this.copy('gitattributes', '.gitattributes');
-}
-
-// create the files necessary to the build task
-Generator.prototype.createBuildTask = function createBuildTask() {
-  var cb = this.async(),
-      self = this;
-
-  fs.mkdir('node_modules', function() {
-    fs.mkdir('node_modules/yeoman-wordpress', function() {
-      fs.mkdir('node_modules/yeoman-wordpress/tasks', function() {
-        self.copy('build.js', 'node_modules/tasks/build.js');
-        cb();
-      });
-    });
-  });
 }
 
 Generator.prototype.endGenerator = function endGenerator() {
